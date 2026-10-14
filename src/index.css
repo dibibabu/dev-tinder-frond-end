@@ -1,6 +1,131 @@
 @import "tailwindcss";
 
 @plugin "daisyui" {
-  themes: light --default, dark --prefersdark, cupcake, synthwave;
+  themes: false;
+}
 
+@plugin "daisyui/theme" {
+  name: "devtinder";
+  default: true;
+  color-scheme: light;
+  --color-base-100: #ffffff;
+  --color-base-200: #fff5f7;
+  --color-base-300: #ffe4ea;
+  --color-base-content: #1f1630;
+  --color-primary: #fd267a;
+  --color-primary-content: #ffffff;
+  --color-secondary: #ff7854;
+  --color-secondary-content: #ffffff;
+  --color-accent: #7c3aed;
+  --color-accent-content: #ffffff;
+  --color-neutral: #1f1630;
+  --color-neutral-content: #ffffff;
+  --color-info: #3b82f6;
+  --color-info-content: #ffffff;
+  --color-success: #10b981;
+  --color-success-content: #ffffff;
+  --color-warning: #f59e0b;
+  --color-warning-content: #ffffff;
+  --color-error: #ef4444;
+  --color-error-content: #ffffff;
+  --radius-selector: 2rem;
+  --radius-field: 0.75rem;
+  --radius-box: 1.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+@plugin "daisyui/theme" {
+  name: "devtinder-dark";
+  prefersdark: true;
+  color-scheme: dark;
+  --color-base-100: #1b1424;
+  --color-base-200: #130e1a;
+  --color-base-300: #2a2036;
+  --color-base-content: #f3eaf7;
+  --color-primary: #fd267a;
+  --color-primary-content: #ffffff;
+  --color-secondary: #ff7854;
+  --color-secondary-content: #ffffff;
+  --color-accent: #a78bfa;
+  --color-accent-content: #1b1424;
+  --color-neutral: #f3eaf7;
+  --color-neutral-content: #1b1424;
+  --color-info: #60a5fa;
+  --color-info-content: #0b1020;
+  --color-success: #34d399;
+  --color-success-content: #052e1f;
+  --color-warning: #fbbf24;
+  --color-warning-content: #2a1a00;
+  --color-error: #f87171;
+  --color-error-content: #2a0606;
+  --radius-selector: 2rem;
+  --radius-field: 0.75rem;
+  --radius-box: 1.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+@utility bg-brand {
+  @apply bg-linear-to-br from-primary to-secondary;
+}
+
+@utility text-brand {
+  @apply bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent;
+}
+
+@utility btn-brand {
+  @apply border-0 bg-linear-to-r from-primary to-secondary text-white shadow-md hover:brightness-110;
+}
+
+@keyframes card-in {
+  from {
+    transform: scale(0.94) translateY(12px);
+    opacity: 0;
+  }
+}
+
+@keyframes swipe-left {
+  to {
+    transform: translateX(-140%) rotate(-18deg);
+    opacity: 0;
+  }
+}
+
+@keyframes swipe-right {
+  to {
+    transform: translateX(140%) rotate(18deg);
+    opacity: 0;
+  }
+}
+
+.card-in {
+  animation: card-in 0.3s ease-out;
+}
+
+/* defined after card-in so a swipe replaces the entry animation */
+.swipe-left {
+  animation: swipe-left 0.35s ease-in forwards;
+}
+
+.swipe-right {
+  animation: swipe-right 0.35s ease-in forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-in,
+  .swipe-left,
+  .swipe-right {
+    animation-duration: 0.01s;
+  }
 }

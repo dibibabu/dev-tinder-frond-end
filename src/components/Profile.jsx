@@ -3,6 +3,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { BASE_URL } from "../utils/constants";
+import EditProfile from "./EditProfile";
 
 const Profile = () => {
   const user = useSelector((store) => store.user);
@@ -84,69 +85,79 @@ const Profile = () => {
   };
 
   if (!user) {
-    return <p className="text-center my-10">{error || "Loading..."}</p>;
+    return <p className="my-10 text-center">{error || "Loading..."}</p>;
   }
 
   const shown = preview || (user.photoUrl && BASE_URL + user.photoUrl);
 
   return (
-    <div className="flex justify-center my-10">
-      <div className="card bg-base-100 w-96 shadow-xl">
-        <div className="card-body items-center">
-          <h2 className="card-title">
-            {user.firstName} {user.lastName}
-          </h2>
-
-          <div className="avatar my-4">
-            <div className="w-32 rounded-full ring ring-primary ring-offset-2">
-              {shown ? (
-                <img src={shown} alt="profile" />
-              ) : (
-                <div className="bg-base-300 w-full h-full flex items-center justify-center text-xs">
-                  no photo
-                </div>
+    <div className="mx-auto max-w-5xl space-y-8 px-4 py-10">
+      <div className="card overflow-hidden bg-base-100 shadow-xl">
+        <div className="h-32 bg-brand" />
+        <div className="card-body pt-0">
+          <div className="-mt-16 flex flex-col gap-4 sm:flex-row sm:items-end">
+            <div className="avatar">
+              <div className="w-32 rounded-full ring-4 ring-base-100">
+                {shown ? (
+                  <img src={shown} alt="profile" />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center bg-base-300 text-xs">
+                    no photo
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="min-w-0 flex-1 pb-2">
+              <h1 className="truncate text-2xl font-bold">
+                {user.firstName} {user.lastName}
+              </h1>
+              {user.email && (
+                <p className="truncate text-sm text-base-content/60">{user.email}</p>
               )}
             </div>
           </div>
 
-          {preview && (
-            <p className="text-xs text-warning">Preview - not saved yet</p>
-          )}
-
-          <input
-            ref={fileRef}
-            type="file"
-            accept="image/jpeg,image/png,image/webp,image/gif"
-            onChange={handleFileChange}
-            disabled={uploading}
-            className="file-input file-input-bordered w-full mt-2"
-          />
-
-          <div className="flex gap-2 w-full mt-4">
-            <button
-              onClick={handleSave}
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <input
+              ref={fileRef}
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif"
+              onChange={handleFileChange}
               disabled={uploading}
-              className="btn btn-primary flex-1"
-            >
-              {uploading ? "Saving..." : "Save Photo"}
-            </button>
-            {file && (
+              className="file-input w-full sm:max-w-xs"
+            />
+            <div className="flex gap-2">
               <button
-                onClick={clearSelection}
+                onClick={handleSave}
                 disabled={uploading}
-                className="btn btn-ghost"
+                className="btn btn-brand rounded-full px-6"
               >
-                Cancel
+                {uploading ? "Saving..." : "Save photo"}
               </button>
-            )}
+              {file && (
+                <button
+                  onClick={clearSelection}
+                  disabled={uploading}
+                  className="btn btn-ghost rounded-full"
+                >
+                  Cancel
+                </button>
+              )}
+            </div>
           </div>
 
-          {saved && <p className="text-success text-sm mt-2">Photo saved</p>}
-          {error && <p className="text-error text-sm mt-2">{error}</p>}
-
-          <p className="text-xs opacity-60 mt-2">jpeg, png, webp or gif, max 2MB</p>
+          <div className="text-sm">
+            {preview && <p className="text-warning">Preview - not saved yet</p>}
+            {saved && <p className="text-success">Photo saved</p>}
+            {error && <p className="text-error">{error}</p>}
+            <p className="text-xs text-base-content/60">
+              jpeg, png, webp or gif, max 2MB
+            </p>
+          </div>
         </div>
       </div>
+
+      <EditProfile user={user} />
     </div>
   );
 };
