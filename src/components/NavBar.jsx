@@ -49,7 +49,7 @@ const NavBar = () => {
             <span className="grid size-9 place-items-center rounded-xl bg-brand text-white shadow-md">
               <FlameIcon className="size-5" />
             </span>
-            <span className="text-brand">devtinder</span>
+            <span className="text-brand">Devtinder</span>
           </Link>
         </div>
 
